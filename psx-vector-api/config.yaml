@@ -1,0 +1,5 @@
+port: 8000
+logLevel: INFO
+chromadb:
+  host: host.docker.internal
+  port: 9001

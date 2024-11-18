@@ -1,0 +1,32 @@
+services:
+  python-fastapi-service:
+    init: true
+    build:
+      context: .
+      target: release
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./config.yaml:/config.yaml:ro
+    profiles:
+      - service
+    networks:
+      - python-fastapi-service
+
+  chromadb:
+    image: ghcr.io/chroma-core/chroma:latest
+    ports:
+      - 9001:8000
+    environment:
+      - IS_PERSISTENT=TRUE
+      - PERSIST_DIRECTORY=/chroma/chroma # this is the default path, change it as needed
+      - ANONYMIZED_TELEMETRY=${ANONYMIZED_TELEMETRY:-TRUE}
+      - ALLOW_RESET=${ALLOW_RESET:-TRUE}
+    profiles:
+      - dependencies
+    networks:
+      - python-fastapi-service
+
+networks:
+  python-fastapi-service:
+    name: python-fastapi-service
