@@ -1,0 +1,18 @@
+services:
+  keycloak-auth-middleware-svc:
+    init: true
+    build:
+      context: .
+      target: release
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./config.yaml:/config.yaml:ro
+    profiles:
+      - service
+    networks:
+      - keycloak-auth-middleware-svc
+
+networks:
+  keycloak-auth-middleware-svc:
+    name: keycloak-auth-middleware-svc

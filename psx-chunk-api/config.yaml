@@ -1,0 +1,6 @@
+chunk_size_tokens: 1000
+port: 8000
+logLevel: INFO
+chromadb:
+  host: host.docker.internal
+  port: 9001

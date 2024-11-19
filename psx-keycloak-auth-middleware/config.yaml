@@ -1,0 +1,8 @@
+port: 8000
+allowOrigins: http://localhost:3000
+logLevel: DEBUG
+keycloak:
+  url: http://keycloak:7080
+  realm: solid
+  client_id: authz-service
+  client_secret: not-very-secret

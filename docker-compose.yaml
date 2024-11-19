@@ -1,0 +1,108 @@
+services:
+  vector-api:
+    init: true
+    build:
+      context: ./psx-vector-api
+      target: release
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./psx-vector-api/config.yaml:/config.yaml:ro
+    profiles:
+      - service
+    networks:
+      - solid-rag-toolbox
+
+  chunk-api:
+    init: true
+    build:
+      context: ./psx-chunk-api
+      target: release
+    ports:
+      - "8001:8000"
+    volumes:
+      - ./psx-chunk-api/config.yaml:/config.yaml:ro
+    profiles:
+      - service
+    networks:
+      - solid-rag-toolbox
+
+  keycloak-middleware:
+    init: true
+    build:
+      context: ./psx-keycloak-auth-middleware
+      target: release
+    ports:
+      - "8002:8000"
+    volumes:
+      - ./psx-keycloak-auth-middleware/config.yaml:/config.yaml:ro
+    profiles:
+      - service
+    networks:
+      - solid-rag-toolbox
+
+  chromadb:
+    image: ghcr.io/chroma-core/chroma:0.5.5
+    ports:
+      - 9001:8000
+    environment:
+      - IS_PERSISTENT=TRUE
+      - PERSIST_DIRECTORY=/chroma/chroma # this is the default path, change it as needed
+      - ANONYMIZED_TELEMETRY=${ANONYMIZED_TELEMETRY:-TRUE}
+      - ALLOW_RESET=${ALLOW_RESET:-TRUE}
+    profiles:
+      - dependencies
+    networks:
+      - solid-rag-toolbox
+
+  keycloak-postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432:5432"
+    profiles:
+      - dependencies
+    networks:
+      - solid-rag-toolbox
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:25.0.4
+    environment:
+      KC_HOSTNAME: localhost
+      KC_HOSTNAME_PORT: 7080
+      # KC_HOSTNAME_STRICT_BACKCHANNEL: "true"
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_HEALTH_ENABLED: "true"
+      KC_HTTP_ENABLED: "true"
+      KC_LOG_LEVEL: info
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://keycloak:7080/health/ready"]
+      interval: 15s
+      timeout: 2s
+      retries: 15
+    command:
+      [
+        "start-dev",
+        "--http-port",
+        "7080",
+        "--https-port",
+        "7443",
+        "--import-realm",
+      ]
+    volumes:
+      - ./keycloak-config/realm-export.json:/opt/keycloak/data/import/realm-export.json
+    ports:
+      - "7080:7080"
+      - "7443:7443"
+    profiles:
+      - dependencies
+    networks:
+      - solid-rag-toolbox
+
+networks:
+  solid-rag-toolbox:
+    name: solid-rag-toolbox
