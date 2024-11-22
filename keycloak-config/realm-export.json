@@ -833,26 +833,12 @@
             ]
           },
           {
-            "name": "poke-api",
-            "type": "urn:authz-service:resources:api",
-            "ownerManagedAccess": false,
-            "displayName": "PokeAPI",
-            "attributes": {},
-            "uris": ["https://pokeapi.co/api/v2/pokemon"],
-            "scopes": [
-              {
-                "name": "read"
-              }
-            ],
-            "icon_uri": ""
-          },
-          {
             "name": "chunk-api",
             "type": "urn:authz-service:resources:api",
             "ownerManagedAccess": false,
             "displayName": "Chunk API",
             "attributes": {},
-            "uris": ["http://localhost:8001/documents"],
+            "uris": ["http://chunk-api:8001/documents"],
             "scopes": [
               {
                 "name": "read"
@@ -1248,17 +1234,6 @@
               "resources": "[\"vector-api\"]",
               "scopes": "[\"notes-sandra@psx.be\"]",
               "applyPolicies": "[\"Sandra Notes Policy\"]"
-            }
-          },
-          {
-            "name": "Any User Permission",
-            "description": "",
-            "type": "resource",
-            "logic": "POSITIVE",
-            "decisionStrategy": "UNANIMOUS",
-            "config": {
-              "resources": "[\"poke-api\"]",
-              "applyPolicies": "[\"Any User Policy\"]"
             }
           },
           {
