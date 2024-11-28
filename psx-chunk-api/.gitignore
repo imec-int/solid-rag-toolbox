@@ -160,7 +160,7 @@ cython_debug/
 #.idea/
 
 # Pkl
-config.pkl
+# config.pkl
 # config.yaml
 
 # Generated config file
