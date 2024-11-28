@@ -1,0 +1,5 @@
+import "Application.pkl"
+
+import "package://pkg.pkl-lang.org/pkl-pantry/org.openapis.v3.contrib@1.0.3#/SchemaGenerator.pkl"
+
+applicationSchema = SchemaGenerator.generate(Application)

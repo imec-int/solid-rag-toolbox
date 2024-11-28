@@ -1,0 +1,52 @@
+version: "3"
+
+interval: 1000ms
+
+tasks:
+  lint:
+    cmds:
+      - ruff check --fix
+      - ruff format
+
+  generate-datamodel:
+    cmds:
+      - pkl eval Schema.pkl -f json -o /tmp/Schema.json
+      - jq '. * .applicationSchema | del(.applicationSchema)' /tmp/Schema.json > /tmp/temp.json && mv /tmp/temp.json /tmp/Schema.json
+      - poetry run datamodel-codegen  --input /tmp/Schema.json --input-file-type jsonschema --output app/config/config.py --output-model-type pydantic_v2.BaseModel --force-optional --base-class pydantic_settings.BaseSettings
+    sources:
+      - Schema.pkl
+      - Application.pkl
+    generates:
+      - app/config/config.py
+
+  generate-config:
+    cmds:
+      - pkl eval config.pkl -f yaml -o config.yaml
+      - echo "# DO NOT MODIFY THIS FILE, USE config.pkl INSTEAD"|cat - config.yaml > /tmp/config.yaml && mv /tmp/config.yaml config.yaml
+    sources:
+      - config.pkl
+      - Application.pkl
+    generates:
+      - config.yaml
+
+  start-dependencies:
+    cmds:
+      - cmd: docker-compose -f docker-compose.yaml --profile dependencies up -d
+        ignore_error: true
+
+  dev:
+    watch: true
+    deps:
+      # - start-dependencies
+    cmds:
+      - task: generate-config
+      - task: generate-datamodel
+      - poetry run fastapi dev app/__main__.py
+
+  prod:
+    deps:
+      # - start-dependencies
+    cmds:
+      - task generate-config
+      - docker-compose -f docker-compose.yaml --profile service build
+      - docker-compose -f docker-compose.yaml --profile service up

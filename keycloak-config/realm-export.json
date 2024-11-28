@@ -774,7 +774,7 @@
             "type": "urn:authz-service:resources:api",
             "ownerManagedAccess": false,
             "attributes": {},
-            "uris": ["http://localhost:8000/invoke"],
+            "uris": ["http://vector-api:8000/invoke"],
             "scopes": [
               {
                 "name": "all-sandra@psx.be"

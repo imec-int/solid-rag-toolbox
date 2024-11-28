@@ -1,0 +1,13 @@
+module Application
+
+class ChromaDBConfig {
+  host: String
+  port: UInt16
+}
+
+port: UInt16 = 8000
+logLevel: "INFO" | "DEBUG" | "WARNING" |"ERROR" = "INFO"
+chromadb: ChromaDBConfig = new {
+  host = "localhost"
+  port = 9001
+}
