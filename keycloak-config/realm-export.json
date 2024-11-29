@@ -838,7 +838,7 @@
             "ownerManagedAccess": false,
             "displayName": "Chunk API",
             "attributes": {},
-            "uris": ["http://chunk-api:8001/documents"],
+            "uris": ["http://chunk-api:8000/documents"],
             "scopes": [
               {
                 "name": "read"
