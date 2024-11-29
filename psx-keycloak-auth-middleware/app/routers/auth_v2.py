@@ -147,7 +147,7 @@ async def post_resource(
             users_to_request.remove(user)
             request_body["user_data_requested"] = users_to_request
             response["errors"].append(
-                f"Access denied. {user_info['given_name']} does not have the neccessary permissions to access {user_first_name}'s {request_body['type']} {suffix}")
+                f"Access denied. {user_info['given_name']} does not have the neccessary permissions to access {data_owner}'s {request_body['type']} {suffix}")
             continue
 
         logger.info(

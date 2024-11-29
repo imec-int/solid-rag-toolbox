@@ -1,0 +1,18 @@
+module Application
+
+class KeycloakConfig {
+  url: String
+  realm: String
+  client_id: String
+  client_secret: String
+}
+
+port: UInt16 = 8000
+allowOrigins: String = "https://demo.psx.ai-data.imec.be, http://localhost:3000"
+logLevel: "INFO" | "DEBUG" | "WARNING" |"ERROR" = "INFO"
+keycloak: KeycloakConfig = new {
+  url = "http://keycloak:7080"
+  realm = "solid"
+  client_id = "authz-service"
+  client_secret = "not-very-secret"
+}

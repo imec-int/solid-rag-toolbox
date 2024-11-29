@@ -774,7 +774,7 @@
             "type": "urn:authz-service:resources:api",
             "ownerManagedAccess": false,
             "attributes": {},
-            "uris": ["http://localhost:8000/invoke"],
+            "uris": ["http://vector-api:8000/invoke"],
             "scopes": [
               {
                 "name": "all-sandra@psx.be"
@@ -838,7 +838,7 @@
             "ownerManagedAccess": false,
             "displayName": "Chunk API",
             "attributes": {},
-            "uris": ["http://chunk-api:8001/documents"],
+            "uris": ["http://chunk-api:8000/documents"],
             "scopes": [
               {
                 "name": "read"
