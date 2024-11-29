@@ -31,7 +31,7 @@ _Keycloak policies overview of Authz-service_
 
 ## Permissions
 
-Permissions are scope-based to reflect the actual permissions of a user on a certain scope and policy. Permissions are linked to the policies and scopes. They have the final word on whether you have access or not; without permissions, access is not handled.
+Permissions are scope-based to reflect the actual permissions of a user on a certain scope and policy. Permissions are linked to the policies and scopes. Defining policies and/or scopes without linking them to permissions won't work. Permissions are the final step in the process of defining access control.
 
 ![Keycloak permissions overview](./img/keycloak_permissions.png)
 _Keycloak permissions overview of Authz-service_
