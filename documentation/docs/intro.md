@@ -29,16 +29,19 @@ If all services are correctly started the docker services should look like this:
 
 ## Configuration
 
-Each service has his own config file (`config.yaml`) in their folder. These configs are configured to work together and the correct endpoints are configured for this docker setup.
+Each service has his own config file (`config.pkl`) in their folder which can be used to overwrite the default set in `Application.pkl`. These configs are configured by default to work together and the correct endpoints are configured for this docker setup.
 
 An example of the config looks like this:
 
-```yaml
-port: 8000
-logLevel: INFO
-chromadb:
-  host: host.docker.internal
-  port: 9001
+```pkl
+amends "Application.pkl"
+
+port = 8001
+logLevel = "DEBUG"
+chromadb = new ChromaDBConfig {
+  host = "host.docker.internal"
+  port = 8005
+}
 ```
 
 **NOTE:**

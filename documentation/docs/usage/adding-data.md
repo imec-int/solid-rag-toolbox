@@ -52,7 +52,7 @@ The body contains the different options for chunking and ingesting the documents
         + `OBJECT`: Used to split a list of JSON objects.
         + `SENTENCE`: This will split a text on sentences (`.`).
         + `PARAGRAPH`: This will split a text on new paragraphs (`\n`).
-        + `TOKENS`: This will split a text or json object on number of tokens. The size of the chunks can be set in the config (`psx-chunk-api/config.yaml`) of the chunk-api (`chunk_size_tokens`).
+        + `TOKENS`: This will split a text or json object on number of tokens. The size of the chunks can be set in the config (`psx-chunk-api/config.pkl`) of the chunk-api (`chunk_size_tokens`, default is 1000).
     - `documents`: The actual documents that need to be chunked and stored. This is always a list of either strings of json objects.
     - `metadata`: This is a field to add metadata to the stored documents/chunks. This could be used in the future to search for more specific documents. The current implementation uses the `type` field in the metadata to check the policies for the users.
 
