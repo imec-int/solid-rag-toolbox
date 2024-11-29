@@ -1,0 +1,8 @@
+{
+  "label": "Access Contol Setup",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "description": "Current access control setup."
+  }
+}
