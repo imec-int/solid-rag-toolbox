@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Authentication
+# Authentication and Authorization
 
 The SOLID RAG Toolbox uses Keycloak as an Authentication and Authorization Provider.
 Keycloak configuration is automatically added on start of the service. Some information has to be filled in manually, this is the case for user passwords.
@@ -11,7 +11,7 @@ This toolbox has 3 per-configured users (Adam, Blake and Sandra) which will have
 
 ## Setup users
 
-The instance of Keycloak can be accessed at `http://localhost:7080` when the service is running. Credentials to login as `admin` can be found (or set) in the `docker-compose.yaml` line 77-78 in the root of the project.
+The instance of Keycloak can be accessed at `http://localhost:7080` when the service is running. Credentials to login as `admin` can be found (or set) in the `docker-compose.yaml` > `keycloak` > `environments`.
 
 After logging in, make sure to select the SOLID realm at the top left. On the left side is a link to the overview of users. Here you can select a user you want to use and add a password in the `Credentials` tab.
 
@@ -37,7 +37,21 @@ curl --location 'http://localhost:7080/realms/solid/protocol/openid-connect/toke
 
 If the authentication is successful the response contains an `access_token`, expiration settings and a `refresh_token`. The Access Token will be used to store or request data.
 
-## Add resources and policies
+## Retrieve Data
 
-This is still a
-**TODO**
+To retrieve data using the middleware, the Access Token (JWT) is sent to the middleware.
+The middleware verifies the necessary permissions for the requested resource and obtains an RPT (Requesting Party Token) to access the data.
+This ensures that only authorized users can access the requested resources. For more details on how permissions are managed, see the [Understanding UMA](#understanding-uma) section.
+
+## Understanding UMA
+
+User-Managed Access (UMA) is a protocol that allows users to manage access to their resources. It involves defining resources, roles, policies, and permissions. 
+After building this project, UMA should be set up. You can check and configure it via Keycloak by navigating to `SOLID realm > clients > authz-service > Authorization`.
+
+### Resources, roles, policies and permissions
+- **Resources** represent the data or services being protected.
+- **Roles** define the different levels of access users can have.
+- **Policies** specify the rules for granting access
+- **Permissions** determine what actions can be performed on the resources.
+
+For more details on the current access control setup for this project, refer to the [Access Control Setup](./../category/access-contol-setup) documentation.
