@@ -6,7 +6,7 @@ import type * as Preset from "@docusaurus/preset-classic";
 
 const config: Config = {
   title: "SOLID RAG Toolbox",
-  tagline: "Dinosaurs are cool",
+  tagline: "",
   favicon: "img/favicon.ico",
 
   // Set the production url of your site here
@@ -38,13 +38,6 @@ const config: Config = {
         docs: {
           sidebarPath: "./sidebars.ts",
         },
-        blog: {
-          showReadingTime: true,
-          feedOptions: {
-            type: ["rss", "atom"],
-            xslt: true,
-          },
-        },
         theme: {
           customCss: "./src/css/custom.css",
         },
@@ -68,7 +61,6 @@ const config: Config = {
           position: "left",
           label: "Tutorial",
         },
-        { to: "/blog", label: "Blog", position: "left" },
       ],
     },
     footer: {
